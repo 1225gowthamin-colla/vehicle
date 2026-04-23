@@ -31,10 +31,6 @@ app.use('/api/bookings', require('./routes/bookingRoutes'));
 app.use('/api/tracking', require('./routes/trackingRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
 
-app.get('/', (req, res) => {
-  res.send('vehicle service is running...');
-});
-
 // Global error handler
 app.use((err, req, res, next) => {
   logger.error(`${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
@@ -48,6 +44,10 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  logger.info(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
-});
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    logger.info(`Server running in development mode on port ${PORT}`);
+  });
+}
+
+module.exports = app;
