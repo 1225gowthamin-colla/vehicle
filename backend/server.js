@@ -31,6 +31,10 @@ app.use('/api/bookings', require('./routes/bookingRoutes'));
 app.use('/api/tracking', require('./routes/trackingRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
 
+app.get('/', (req, res) => {
+  res.send('vehicle service is running...');
+});
+
 // Global error handler
 app.use((err, req, res, next) => {
   logger.error(`${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
